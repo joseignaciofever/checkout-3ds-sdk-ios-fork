@@ -16,7 +16,9 @@ let package = Package(
         .package(
             url: "https://github.com/checkout/checkout-event-logger-ios-framework.git",
             from: "1.2.4"
-        )],
+        ),
+        .package(url: "https://github.com/airsidemobile/JOSESwift", from: "2.4.0"),
+        ],
     targets: [
         .binaryTarget(
             name: "Checkout3DS",
@@ -26,15 +28,11 @@ let package = Package(
             name: "Checkout3DS-Security",
             path: "Checkout3DS-Security.xcframework"
         ),
-        .binaryTarget(
-            name: "JOSESwift",
-            path: "Dependencies/JOSESwift.xcframework"
-        ),
         .target(name: "Checkout3DSPackages",
                 dependencies: [
                     .product(name: "CheckoutEventLoggerKit",
                              package: "checkout-event-logger-ios-framework"),
-                    .target(name: "JOSESwift", condition: .when(platforms: .some([.iOS]))),
+                    .product(name: "JOSESwift", package: "JOSESwift"),
                     .target(name: "Checkout3DS", condition: .when(platforms: .some([.iOS]))),
                     .target(name: "Checkout3DS-Security", condition: .when(platforms: .some([.iOS])))
                 ],
